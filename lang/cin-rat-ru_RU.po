@@ -1,0 +1,131 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KinoRating\n"
+"POT-Creation-Date: 2013-01-21 15:20+0300\n"
+"PO-Revision-Date: 2013-01-21 15:27+0300\n"
+"Last-Translator: Smiling_Hemp \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /cinema_rating.class.php:119 /page/settings_menu.php:6
+msgid "Main settings"
+msgstr "Главные настройки"
+
+#: /cinema_rating.class.php:119 /cinema_rating.class.php:302
+msgid "Kino-Rating"
+msgstr "Кино-Рейтинг"
+
+#: /cinema_rating.class.php:135
+msgid "ERROR!!!"
+msgstr "Произошла ошибка!!!"
+
+#: /cinema_rating.class.php:178 /cinema_rating.class.php:179
+#: /cinema_rating.class.php:182 /cinema_rating.class.php:185
+msgid "Rating from KinoPoisk site"
+msgstr "Rating from KinoPoisk site"
+
+#: /cinema_rating.class.php:188
+msgid "No rating"
+msgstr "Нет рейтинга"
+
+#: /cinema_rating.class.php:195
+msgid "Plugin homepage"
+msgstr "Домашняя страница плагина"
+
+#: /cinema_rating.class.php:302
+msgid "KinoPoisk and IMDb rating"
+msgstr "Рейтинг КиноПоск и IMDb"
+
+#: /cinema_rating.class.php:317 /page/settings_menu.php:19
+msgid "KinoPoisk website Rating ID from"
+msgstr "ID рейтинга с сайта КиноПоиск"
+
+#: /page/settings_menu.php:2
+msgid "Rating displaying settings"
+msgstr "Настойки изображения рейтинга"
+
+#: /page/settings_menu.php:9
+msgid "Show rating image:"
+msgstr "Показать картинку рейтинга:"
+
+#: /page/settings_menu.php:12
+msgid "KinoPoisk and IMDb"
+msgstr "КиноПоиск и IMDb"
+
+#: /page/settings_menu.php:13
+msgid "KinoPoisk"
+msgstr "КиноПоиск"
+
+#: /page/settings_menu.php:14
+msgid "IMDb"
+msgstr "IMDb"
+
+#: /page/settings_menu.php:16
+msgid "Choose which site&rsquo;s rating to show in the content."
+msgstr "Выберете, рейтинг, какого сайта выводить в контенте."
+
+#: /page/settings_menu.php:21
+msgid "For KinoPoisk rating and IMDb"
+msgstr "Для рейтинга КиноПоиск и IMDb"
+
+#: /page/settings_menu.php:29 /page/settings_menu.php:73
+msgid "Axial positioning <b>X</b>"
+msgstr "Позиционирование по оси <b>X</b>"
+
+#: /page/settings_menu.php:31 /page/settings_menu.php:75
+msgid "The distance from the left edge of the picture to the text"
+msgstr "Расстояние от левого края картинки до текста"
+
+#: /page/settings_menu.php:34 /page/settings_menu.php:78
+msgid "Axial positioning <b>Y</b>"
+msgstr "Позиционирование по оси <b>Y</b>"
+
+#: /page/settings_menu.php:36 /page/settings_menu.php:80
+msgid "The distance from the upper edge of the picture to the text"
+msgstr "Расстояние от верхнего края картинки до текста"
+
+#: /page/settings_menu.php:39 /page/settings_menu.php:83
+msgid "Font"
+msgstr "Шрифт"
+
+#: /page/settings_menu.php:45 /page/settings_menu.php:89
+msgid ""
+"Select the font of the text. You can use your own font: for this add font-"
+"file with &laquo;ttf&raquo; name suffix to folder FONT of this plugin."
+msgstr ""
+"Выберите шрифт текста. Можете использовать свой шрифт, для этого добавьте "
+"файл шрифта с расширением &laquo;ttf&raquo; в папку font этого плагина"
+
+#: /page/settings_menu.php:48 /page/settings_menu.php:92
+msgid "Font size"
+msgstr "Размер шрифта"
+
+#: /page/settings_menu.php:50 /page/settings_menu.php:94
+msgid "Select font size"
+msgstr "Выберите размер шрифта"
+
+#: /page/settings_menu.php:53 /page/settings_menu.php:97
+msgid "Text color"
+msgstr "Цвет текста"
+
+#: /page/settings_menu.php:58 /page/settings_menu.php:102
+msgid "Text shade"
+msgstr "Тень от текста"
+
+#: /page/settings_menu.php:61 /page/settings_menu.php:105
+msgid "Enable"
+msgstr "Включить"
+
+#: /page/settings_menu.php:62 /page/settings_menu.php:106
+msgid "Disable"
+msgstr "Выключить"
+
+#: /page/settings_menu.php:65 /page/settings_menu.php:109
+msgid "Rating text shade"
+msgstr "Тень от текста рейтинга"
+
+#: /page/settings_menu.php:113
+msgid "Image generate"
+msgstr "Генерировать рисунок"

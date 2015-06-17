@@ -1,0 +1,73 @@
+.settingRatAvk th,.settingRatAvk td{
+    padding: 1px 10px;
+}
+.tdtri{
+    opacity: 0;
+    display: none;
+    background-color: #FFF;
+}
+.button-primary{
+    position: relative;
+    margin-top: 15px!important;
+}
+.infavk{
+    font-weight: normal!important;
+}
+.selectavk, .inputavk{
+    min-width: 200px;
+}
+.coloravk{
+    min-width: 130px;
+}
+th{
+    text-align: left;
+}
+.avk_img_load{
+    text-align: right;
+    vertical-align: central;
+}
+.tdtri{
+    position: fixed;
+    margin-top: -7px;
+    width: 220px;
+    text-align: center;
+}
+.colorpicker{
+    margin-top: -77px;
+    z-index: 999!important;
+}
+#avk_img_kp{
+    
+}
+#avk_img_imdb{
+    border-radius: 5px;
+}
+fieldset{
+    width: 600px;
+    border-radius: 10px;
+    border: 2px solid black;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 5px 10px 25px;
+}
+legend{
+    margin-left: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 7px;
+    height: 40px;
+    vertical-align: central;
+}
+legend>p{
+    margin-top: 10px;
+}
+.td-donate{
+}
+.donate-form-kp{
+    position: absolute;
+    display: inline-block;
+    margin: -50px 0 0 500px;
+}
+.donate-form-kp input[type="image"]{
+    outline: none;
+}
