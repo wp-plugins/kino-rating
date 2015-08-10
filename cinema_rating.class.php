@@ -4,7 +4,7 @@
  * 	Plugin URI: http://avkproject.ru/plugins/kinopoisk-and-wordpress.html
  *  Description: The plugin adds beautiful pictures with movie ratings.
  * 	Author: Smiling_Hemp
- * 	Version: 1.0.0
+ * 	Version: 1.1.0
  * 	Author URI: https://profiles.wordpress.org/smiling_hemp#content-plugins
  */
 
@@ -33,12 +33,13 @@ class CinemaRatingAVK{
     protected $arrIMDb;
     protected $dataKP;
     protected $dataIMDb;
-
+    const SLUG = 'cinratavk';
+    
     public function __construct(){
         /** Установка констант */
-        if(!defined('KP_HOST'))    define('KP_HOST',$_SERVER['HTTP_HOST']);
-        if(!defined('KP_PL_PATH')) define('KP_PL_PATH', plugin_dir_path(__FILE__));
-        if(!defined('KP_PL_URL'))  define('KP_PL_URL', plugin_dir_url(__FILE__));
+        if( !defined( 'KP_HOST' ) )    define( 'KP_HOST', $_SERVER['HTTP_HOST'] );
+        if( !defined( 'KP_PL_PATH' ) ) define( 'KP_PL_PATH', plugin_dir_path( __FILE__ ) );
+        if( !defined( 'KP_PL_URL' ) )  define( 'KP_PL_URL', plugin_dir_url( __FILE__ ) );
         /** Загрузка перевода */
         add_action('plugins_loaded', array(&$this, 'load_plugin_rating'));
         /** Массивы настроек */
@@ -90,7 +91,8 @@ class CinemaRatingAVK{
         /** Обработка AJAX запроса CMS WordPress в администраторской части сайта */
         add_action('wp_ajax_avk_get_results',array(&$this,'avk_admin_process_ajax'));
         /** Добавление кнопки в HTML редакторе */
-        add_action('admin_footer', array(&$this,'add_quicktags_avk'));
+        add_action('admin_footer', array(&$this,'add_quicktags_avk') );
+        add_action('admin_head', array( &$this, 'add_quicktags_avk1' ) );
         /** Подключение AJAX для фронтальной части сайта */
         add_action('wp_enqueue_scripts', array(&$this, 'avk_script_client'));
         add_action('wp_ajax_loadimgrating', array(&$this,"load_img_rating_avk"));
@@ -108,8 +110,6 @@ class CinemaRatingAVK{
         $colorCustomer = imagecolorallocate($image, $color['r'], $color['g'], $color['b']);
         
         $fontPaf = $path . 'font/' . $data['font'];
-        $posX = (int)$x;
-        $posY = (int)$y;
         
         if($data['shadow']=='yes'){
             imagettftext($image, (int)$data['size'], 0, $data['x']+1, $data['y']+1, $black, $fontPaf, $text);
@@ -134,7 +134,7 @@ class CinemaRatingAVK{
     
     /** Добавляет страницу плагина */
     public function add_page_settings(){
-        $this->incPage = add_options_page(__('Main settings','cin-rat'),__('Kino-Rating','cin-rat'),'manage_options','cinema-rating-avk',array(&$this,'settings_page'));
+        $this->incPage = add_options_page(__( 'Main settings', 'cin-rat' ),__('Kino-Rating','cin-rat'),'manage_options','cinema-rating-avk',array(&$this,'settings_page'));
         add_action( 'admin_print_scripts-' . $this->incPage, array( &$this, 'print_scripts' ) );
         add_action( 'admin_print_styles-' . $this->incPage, array( &$this, 'print_styles' ) );
     }
@@ -157,7 +157,7 @@ class CinemaRatingAVK{
         wp_enqueue_script( 'avk-script-kp', KP_PL_URL . 'js/script.js', array( 'jquery' ), '1.0.0'  );
         
         wp_enqueue_script ( 'avk-ajax-kp', KP_PL_URL . 'js/ajax.js', array( 'jquery' ), '1.0.0' );
-        wp_localize_script( 'avk-ajax-kp', 'add_vars', array( 'avk_kp_nonce'=>wp_create_nonce('avk-nonce') ) );
+        wp_localize_script( 'avk-ajax-kp', 'kpRatingAVK', array( 'avk_kp_nonce' => wp_create_nonce( 'avk-nonce' ) ) );
     }
     
     /** Подключение скриптов */
@@ -167,6 +167,7 @@ class CinemaRatingAVK{
     }
     
     protected function _avk_admin_script(){
+        $str1 = $str2 = '';
         foreach($this->arrValue as $arr){
             $str1 .= 'jQ'.$arr['id'].' = jQuery("#'.$arr['id'].'").attr("value");'."\n\t\t";
             $str2 .= $arr['id'].' : jQ'.$arr['id'].','."\n\t\t\t\t";
@@ -183,7 +184,7 @@ class CinemaRatingAVK{
                 'function avk_get_arr(){'."\n\t\t".
                 $str1
                 .'arrDataAVK = {action: "avk_get_results",
-                                avk_kp_nonce: add_vars.avk_kp_nonce,
+                                avk_kp_nonce: kpRatingAVK.avk_kp_nonce,
                                    '.$str2.'};
                 return arrDataAVK;
                 }'."\n".'</script>'."\n";
@@ -192,7 +193,7 @@ class CinemaRatingAVK{
     
     /** Функция обработки/вывода запроса */
     public function avk_admin_process_ajax(){
-        if(!isset($_POST['avk_kp_nonce']) || wp_verify_nonce($_POST['avk_kp_nonce'],'avk_kp_nonce')) die('<p>'.__('ERROR!!!','cin-rat').'</p>');
+        if(!isset($_POST['avk_kp_nonce']) || wp_verify_nonce($_POST['avk_kp_nonce'],'avk_kp_nonce')) die('<p>'.__('ERROR','cin-rat').'!!!</p>');
         //сохранение настроек
         $this->save_settings($this->arrValue);
         $this->save_settings($this->arrKP);
@@ -218,23 +219,23 @@ class CinemaRatingAVK{
     /** Подключение AJAX скриптов для фронтальной части сайта */
     public function avk_script_client() {
         wp_register_script( 'avksc', KP_PL_URL . 'js/cl_script.js', array('jquery') );
-        wp_localize_script( 'avksc', 'avkAjaxKP', array( 'ajurl' => admin_url( 'admin-ajax.php' )));        
+        wp_localize_script( 'avksc', 'avkAjaxKP', array( 'ajurl' => admin_url( 'admin-ajax.php' ) ) );        
         wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'avksc' );
     }
     
     /** Обработка AJAX запроса для фронтальной части сайта */
     public function load_img_rating_avk(){
-        if(!defined('WPLANG'))     define('WPLANG', 'ru_RU');
-        $valueUrl = abs((int)$_POST['rating']);
-        $rating = $this->get_rating($valueUrl);
+        //if( !defined( 'WPLANG' ) ) define( 'WPLANG', 'ru_RU' );
+        $valueUrl = abs( ( int ) $_POST['rating'] );
+        $rating = $this->get_rating( $valueUrl );
         $ratingImg = "";
-        if(is_object($rating)){
-            switch(get_option('avk_select_ratings_path')){
+        if( is_object( $rating ) ){
+            switch( get_option('avk_select_ratings_path') ){
                 case'kpimdb': //create image KP
-                              $varmsKP = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataKP,$rating->kp_rating.'/10','rakp','kp_'.$valueUrl);
+                              $varmsKP = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataKP,$rating->kp_rating.'/10', 'rakp', 'kp_' . $valueUrl );
                               //create image IMDb
-                              $varmsIMDb = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataIMDb,$rating->imdb_rating.'/10','ramdb','imdb_'.$valueUrl);
+                              $varmsIMDb = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataIMDb,$rating->imdb_rating.'/10', 'ramdb', 'imdb_' . $valueUrl );
                               //load image content
                               $ratingImg = '<img id="avk_img_kp" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->kp_rating.'" width="'.$varmsKP['width'].'px" height="'.$varmsKP['height'].'px" alt="'.$rating->kp_rating.'" src="'.KP_PL_URL.'images/kp_'.$valueUrl.'.png"/>
                                             <img id="avk_img_imdb" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->imdb_rating.'" style="border-radius: 5px;" width="'.$varmsIMDb['width'].'px" alt="'.$rating->imdb_rating.'" height="'.$varmsIMDb['height'].'px" src="'.KP_PL_URL.'images/imdb_'.$valueUrl.'.png"/>';break;
@@ -336,20 +337,45 @@ class CinemaRatingAVK{
     public function add_quicktags_avk() {
         ?>
         <script type="text/javascript" charset="utf-8">
-            jQuery(document).ready(function(){
-                if(typeof(QTags) !== 'undefined') {
-                    QTags.addButton( '<?php _e('Kino-Rating','cin-rat');?>', '<?php _e('Kino-Rating','cin-rat');?>', '[kpimdb]', '[/kpimdb]','que-marks-key','<?php _e('KinoPoisk and IMDb rating','cin-rat');?>');
-                }
-            });
+            ( function( $ ){
+                $( document ).ready(function(){
+                    if( typeof( QTags ) !== 'undefined' ){
+                        QTags.addButton( '<?php _e('Kino-Rating','cin-rat');?>', '<?php _e('Kino-Rating', 'cin-rat');?>', '[kpimdb]', '[/kpimdb]','que-marks-key','<?php _e('KinoPoisk and IMDb rating','cin-rat');?>');
+                    }
+                });
+            } )( jQuery )
         </script>
         <?php
     }
     
+    public function add_quicktags_avk1(){
+?>
+        <script type='text/javascript'>
+            var kpRatingButtonMceAvk = {
+                    idcinema: "<?php _e('Film ID', 'cin-rat'); ?>",
+                    nameButton: "<?php _e('Kino-Rating', 'cin-rat'); ?>",
+                };
+        </script>        
+<?php
+        add_filter('mce_external_plugins', array( &$this, 'mce_external_plugins' ) );
+        add_filter('mce_buttons', array( &$this, 'mce_buttons' ) );
+    }
+    
+    public function mce_external_plugins( $pluginArray ){
+        $pluginArray[ 'cin_rat_button' ] = KP_PL_URL . 'js/button.js';
+        return $pluginArray;
+    }
+    
+    public function mce_buttons( $buttons ){
+        array_push( $buttons, 'cin_rat_button_key' );
+        return $buttons;
+    }
+    
     public function get_content($atts, $content){
-        if (!isset($atts[name]))
+        if (!isset($atts['name']))
 			$sp_name = 'ratingAVK';
 		else
-			$sp_name = $atts[name];
+			$sp_name = $atts['name'];
         $ratingImg = "";
         if(is_single() || is_page()){
             $ratingImg  = "\n".'<!-- Start Cinema rating from avkproject.ru -->';

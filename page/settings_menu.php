@@ -119,7 +119,7 @@
                     </tr>
                 </table>
             </fieldset>
-            <input id="avk_submit" type="submit" name="avk-submit" class="button-primary" value="<?php _e('Image generate','cin-rat');?>"/>
+            <input id="avk_submit" type="submit" name="avk-submit" class="button-primary" value="<?php _e('Save and generate the images','cin-rat');?>"/>
         </div>
     </form>
     <div id="avk_result" style="margin-top: 20px;"></div>

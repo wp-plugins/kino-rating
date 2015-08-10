@@ -30,5 +30,8 @@ The plugin adds beautiful pictures with movie ratings.
 
 == Changelog ==
 
+= 1.1.0 =
+* The button in the visual editor is added
+
 = 1.0.0 =
 * first version
