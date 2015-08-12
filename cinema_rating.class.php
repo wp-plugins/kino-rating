@@ -4,7 +4,7 @@
  * 	Plugin URI: http://avkproject.ru/plugins/kinopoisk-and-wordpress.html
  *  Description: The plugin adds beautiful pictures with movie ratings.
  * 	Author: Smiling_Hemp
- * 	Version: 1.1.0
+ * 	Version: 1.1.1
  * 	Author URI: https://profiles.wordpress.org/smiling_hemp#content-plugins
  */
 
@@ -33,6 +33,7 @@ class CinemaRatingAVK{
     protected $arrIMDb;
     protected $dataKP;
     protected $dataIMDb;
+    private $__temp = 1;
     const SLUG = 'cinratavk';
     
     public function __construct(){
@@ -48,7 +49,7 @@ class CinemaRatingAVK{
             array("id" => "avk_select_ratings_path","std" => ""),
         );
         $this->arrKP = array(
-            array("id" => 'avk_position_x_kp',"std" => "18"),
+            array("id" => 'avk_position_x_kp',"std" => "15"),
             array("id" => 'avk_position_y_kp',"std" => "32"),
             array("id" => 'avk_font_rat_kp',"std" => "harrint.ttf"),
             array("id" => 'avk_font_size_kp',"std" => "14"),
@@ -56,8 +57,8 @@ class CinemaRatingAVK{
             array("id" => 'avk_shadow_font_kp',"std" => "no")
         );
         $this->arrIMDb = array(
-            array("id" => 'avk_position_x_imdb',"std" => "52"),
-            array("id" => 'avk_position_y_imdb',"std" => "24"),
+            array("id" => 'avk_position_x_imdb',"std" => "55"),
+            array("id" => 'avk_position_y_imdb',"std" => "23"),
             array("id" => 'avk_font_rat_imdb',"std" => "harrint.ttf"),
             array("id" => 'avk_font_size_imdb',"std" => "12"),
             array("id" => 'avk_color_font_imdb',"std" => "#ff0000"),
@@ -116,7 +117,7 @@ class CinemaRatingAVK{
         }
         imagettftext($image, (int)$data['size'], 0, $data['x'], $data['y'], $colorCustomer, $fontPaf, $text);
 
-        $pathImg = $path . 'images/' . $nameImgOut . '.png';
+        $pathImg = $path . 'images/temp/' . $nameImgOut . '.png';
         
     	imagepng( $image, $pathImg );
         imagedestroy( $image );
@@ -237,14 +238,14 @@ class CinemaRatingAVK{
                               //create image IMDb
                               $varmsIMDb = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataIMDb,$rating->imdb_rating.'/10', 'ramdb', 'imdb_' . $valueUrl );
                               //load image content
-                              $ratingImg = '<img id="avk_img_kp" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->kp_rating.'" width="'.$varmsKP['width'].'px" height="'.$varmsKP['height'].'px" alt="'.$rating->kp_rating.'" src="'.KP_PL_URL.'images/kp_'.$valueUrl.'.png"/>
-                                            <img id="avk_img_imdb" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->imdb_rating.'" style="border-radius: 5px;" width="'.$varmsIMDb['width'].'px" alt="'.$rating->imdb_rating.'" height="'.$varmsIMDb['height'].'px" src="'.KP_PL_URL.'images/imdb_'.$valueUrl.'.png"/>';break;
+                              $ratingImg = '<img id="avk_img_kp" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->kp_rating.'" width="'.$varmsKP['width'].'px" height="'.$varmsKP['height'].'px" alt="'.$rating->kp_rating.'" src="'.KP_PL_URL.'images/temp/kp_'.$valueUrl.'.png"/>
+                                            <img id="avk_img_imdb" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->imdb_rating.'" style="border-radius: 5px;" width="'.$varmsIMDb['width'].'px" alt="'.$rating->imdb_rating.'" height="'.$varmsIMDb['height'].'px" src="'.KP_PL_URL.'images/temp/imdb_'.$valueUrl.'.png"/>';break;
                 case'kp': //create image KP
                           $varmsKP = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataKP,$rating->kp_rating.'/10','rakp','kp_'.$valueUrl);
-                          $ratingImg = '<img id="avk_img_kp" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->kp_rating.'" width="'.$varmsKP['width'].'px" height="'.$varmsKP['height'].'px" alt="'.$rating->kp_rating.'" src="'.KP_PL_URL.'images/kp_'.$valueUrl.'.png"/>'; break;
+                          $ratingImg = '<img id="avk_img_kp" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->kp_rating.'" width="'.$varmsKP['width'].'px" height="'.$varmsKP['height'].'px" alt="'.$rating->kp_rating.'" src="'.KP_PL_URL.'images/temp/kp_'.$valueUrl.'.png"/>'; break;
                 case'imdb': //create image IMDb
                             $varmsIMDb = $this->create_img(KP_PL_PATH,KP_PL_URL,$this->dataIMDb,$rating->imdb_rating.'/10','ramdb','imdb_'.$valueUrl); 
-                            $ratingImg = '<img id="avk_img_imdb" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->imdb_rating.'" style="border-radius: 5px;" width="'.$varmsIMDb['width'].'px" alt="'.$rating->imdb_rating.'" height="'.$varmsIMDb['height'].'px" src="'.KP_PL_URL.'images/imdb_'.$valueUrl.'.png"/>'; break;
+                            $ratingImg = '<img id="avk_img_imdb" title="'.__('Rating from KinoPoisk site','cin-rat').' = '.$rating->imdb_rating.'" style="border-radius: 5px;" width="'.$varmsIMDb['width'].'px" alt="'.$rating->imdb_rating.'" height="'.$varmsIMDb['height'].'px" src="'.KP_PL_URL.'images/temp/imdb_'.$valueUrl.'.png"/>'; break;
             }
         }else{
             $ratingImg = "<p>" . __('No rating','cin-rat') . "</p>";
@@ -331,7 +332,7 @@ class CinemaRatingAVK{
     }
     
     public function load_plugin_rating(){
-        load_plugin_textdomain('cin-rat', false, dirname(plugin_basename(__FILE__)).'/lang');
+        load_plugin_textdomain( 'cin-rat', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
     }
     
     public function add_quicktags_avk() {
@@ -376,14 +377,15 @@ class CinemaRatingAVK{
 			$sp_name = 'ratingAVK';
 		else
 			$sp_name = $atts['name'];
+
         $ratingImg = "";
-        if(is_single() || is_page()){
-            $ratingImg  = "\n".'<!-- Start Cinema rating from avkproject.ru -->';
-            $ratingImg .= "\n".'<div id="avkshowrating" style="height: 44px;display: inline-block;">';
-            $ratingImg .= "\n\t".'<img id="avkrating" src="'.KP_PL_URL.'images/load_processing.gif" title="'. __('KinoPoisk website Rating ID from','cin-rat') .'" alt="'.$content.'"/>';
-            $ratingImg .= "\n".'</div>';
-            $ratingImg .= "\n".'<!-- Stop Cinema rating from avkproject.ru -->';
-        }
+        $ratingImg  = "\n".'<!-- Start Cinema rating from avkproject.ru -->';
+        $ratingImg .= "\n".'<div id="avkkprating-' . $this->__temp . '" class="avkkprating" style="height: 44px;display: inline-block;">';
+        $ratingImg .= "\n\t".'<img id="avkrating-' . $this->__temp . '" class="avkrating" src="'.KP_PL_URL.'images/load_processing.gif" title="'. __('KinoPoisk website Rating ID from','cin-rat') .'" alt="'.$content.'"/>';
+        $ratingImg .= "\n".'</div>';
+        $ratingImg .= "\n".'<!-- Stop Cinema rating from avkproject.ru -->';
+
+        $this->__temp++;
         return $ratingImg;
     }
 }

@@ -4,7 +4,7 @@ Donate link: goo.gl/zwzfod
 Tags: kino, rating, cineme, imdb, kinopoisk, Kino-Rating
 Requires at least: 3.5.1
 Tested up to: 4.3
-Stable tag: 1.0.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,10 @@ The plugin adds beautiful pictures with movie ratings.
 1. Settings page images rated
 
 == Changelog ==
+
+= 1.1.1 =
+* The output of images is remade, now they are output not only to Single and Page, but also on other pages.
+* Added possibility of use of several ratings in one record.
 
 = 1.1.0 =
 * The button in the visual editor is added
