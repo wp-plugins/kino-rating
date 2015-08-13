@@ -31,8 +31,8 @@ The plugin adds beautiful pictures with movie ratings.
 == Changelog ==
 
 = 1.1.1 =
-* The output of images is remade, now they are output not only to Single and Page, but also on other pages.
-* Added possibility of use of several ratings in one record.
+* The output of images is remade, now they are output not only to Single and Page, but also on other pages
+* Added possibility of use of several ratings in one record
 
 = 1.1.0 =
 * The button in the visual editor is added
